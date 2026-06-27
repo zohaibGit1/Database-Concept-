@@ -1,0 +1,135 @@
+-- Pratice Question 1
+-- Question 1: Employee Management System
+-- A company wants to store employee information.
+-- Requirements:
+-- Every employee has a unique ID.
+-- Name is mandatory.
+-- Email should be unique.
+-- Phone number should also be unique.
+-- Salary cannot be negative.
+-- Create the employees table.
+
+CREATE TABLE employees (
+	emp_id 			int auto_increment,
+	emp_name 		varchar(255) not null,
+    email 			varchar(30) not null,
+    phone_no 		bigint, 
+    salary 			decimal (10, 2),
+    constraint emp_id_employees_primary 		primary key (emp_id),
+    constraint email_employees_unique 			unique (email),
+    constraint phone_no_employees_unique 		unique (phone_no),
+    constraint salary_employees_check	 		check (salary > 0)
+);
+
+-- Question 2: User Registration System
+-- Requirements:
+-- User ID auto-generated.
+-- Username must be unique.
+-- Email must be unique.
+-- Password is mandatory.
+-- Account creation date should automatically store today's date.
+-- Create the users table.
+
+CREATE TABLE users (
+	user_id 				integer auto_increment primary key,
+    username 				varchar(40) not null,
+    email 					varchar(255) not null,
+    password 				varchar(200) not null, 
+    account_Creation_Date	DATE default (CURRENT_DATE),
+    constraint users_username_unique unique (username),
+    constraint users_email_unique unique (email)
+);
+
+
+-- Question 5: E-Commerce Products
+-- Requirements:
+-- Product ID auto-generated.
+-- Product name mandatory.
+-- Price should be greater than 0.
+-- Stock quantity cannot be negative.
+-- Product status should be "Available" by default.
+-- Create the products table.
+
+CREATE TABLE products (
+	product_id 			integer auto_increment primary key,
+    product_name		varchar(255) not null, 
+    price 				integer,
+    stock		integer, 
+    product_status 		varchar(200) DEFAULT 'Available',
+    constraint products_price_check  check(price > 0),
+    constraint products_stock__check  check(stock >= 0)
+);
+
+-- Question 6: Department and Employee System
+
+-- Create:
+
+-- departments
+-- department_id
+-- department_name (unique)
+-- employees
+-- employee_id
+-- employee_name
+-- salary
+-- department_id
+
+-- Conditions:
+
+-- One department can have many employees.
+-- Every employee belongs to one department.
+
+-- Use a foreign key.
+
+CREATE TABLE departments (
+	department_id     int primary key auto_increment,
+	department_name   varchar(55) not null, 
+	constraint departments_department_name_unique unique (department_name)
+);
+
+CREATE TABLE employees (
+	employee_id     int primary key auto_increment,
+	employee_name   varchar(55) not null, 
+    salary 			decimal(10, 3) not null check (salary >= 0),
+    department_id 	integer not null,
+	constraint employees_department_id_fk foreign key (department_id) references departments(department_id)
+);
+
+--  Real world question
+
+-- Question 7: Naukri/LinkedIn Clone
+-- users
+-- user_id
+-- name
+-- email
+-- password
+-- created_at
+-- projects
+-- project_id
+-- title
+-- description
+-- user_id
+
+-- Conditions:
+
+-- One user can add multiple projects.
+-- Project title cannot be NULL.
+
+CREATE TABLE users (
+	user_id			int auto_increment, 
+	name			varchar(244) not null,
+	email			varchar(255) not null, 
+	password		varchar(255) not null,
+	created_at      DATETIME default current_timestamp,
+    constraint users_user_id_primary primary key (user_id),
+    constraint users_email_unique 	unique (email)
+);
+
+CREATE TABLE projects (
+	project_id   int auto_increment, 
+	title		varchar(244) not null,
+	description TEXT not null,
+    user_id 	int not null ,
+	constraint projects_project_id_primary primary key (project_id),
+    constraint projects_user_id_fk 	foreign key (user_id) references users(user_id)
+);
+
