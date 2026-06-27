@@ -1,0 +1,125 @@
+CREATE DATABASE IF NOT EXISTS CampusX;
+use campusX;
+
+CREATE TABLE users (
+	user_id   int auto_increment primary key,
+    name 	  varchar(255) NOT NULL,
+	email 	  varchar(255) UNIQUE,
+    password  varchar(255) 
+);	
+
+select * from users;
+
+insert into users (name, email, password)  
+value('zohaib', 'zohaibanwar584@gmail.com', 'king');
+
+insert into users (name, email, password)
+value('King', 'zohaibanwar584@gmail.com', 'king');  # Error because it is email column contains the unique value
+
+desc users;
+
+drop table if exists users;
+
+# Table for the Check constraints 
+
+CREATE TABLE students (
+
+	std_id 		INTEGER,
+    name 		varchar(20),
+	age 		integer
+    
+    CONSTRAINT students_age_check CHECK (age > 4 and age < 19)
+--  <constraint> <alias> 		<constraint name> (column)
+);
+
+desc students;
+
+select * from students;
+
+insert into students (std_id, name, age) 
+values (1, 'Zohaib', 16);
+
+insert into students (std_id, name, age) 
+values (1, 'Zohaib', 20);
+
+
+Create table ticket (
+	
+    ticket_id 		integer primary key auto_increment,
+    name 			varchar(255) not null,
+    travel_date 	DATETIME default current_timestamp
+    
+);
+
+select * from ticket;
+
+insert into ticket (name) 
+values ('Zohaib Abwar');
+
+-- Foregin Key 
+
+CREATE TABLE customer (
+	customer_id 	integer 		auto_increment,
+    name 			varchar(255) 	not null,
+    email 			varchar (255) 	not null,
+    constraint accounts_customer_id_primary 	primary key (customer_id),
+    constraint accounts_email_unique 			unique (email)
+);
+
+-- Add column in the customers table
+ALTER TABLE customer
+add column password varchar (255) not null;
+
+-- Drop column from the customer table
+ALTER TABLE customer
+DROP COLUMN password;
+
+select * from customer;
+
+
+desc customer;
+
+select * from customer;
+
+
+
+
+INSERT INTO customer (name, email)
+VALUES ('Rahul Sharma', 'rahul.sharma@gmail.com');
+
+INSERT INTO customer (name, email)
+VALUES ('Priya Singh', 'priya.singh@gmail.com');
+
+select * from customer;
+--  Now we have to use the primary key on the customer in the order table 
+
+CREATE TABLE orders (
+	order_id 		Integer auto_increment,
+    customer_id 	Integer,
+    order_time 		DateTime default current_timestamp,
+    constraint 	orders_order_id_primary primary key (order_id),
+    constraint orders_customer_id_forgein foreign key (customer_id) references customer(customer_id)
+);
+
+desc orders;
+
+insert into orders (customer_id) 
+values (1);
+
+select * from orders;
+desc  orders;
+
+desc accounts;
+
+
+
+
+
+
+
+
+
+
+
+
+
