@@ -1,0 +1,18 @@
+SELECT * FROM dataset1.smartphones;
+
+# find all samsung phones
+SELECT * FROM dataset1.smartphones WHERE BRAND_NAME = 'SAMSUNG';
+
+# find all phones with price > 50000 WHER BRAND_NAME IS APPLE
+SELECT * FROM dataset1.smartphones WHERE (PRICE > 50000 AND BRAND_NAME = 'APPLE');
+
+# find all phones in the price range of 10000 and 20000
+# Here we use the b/w operator
+SELECT COUNT(*) AS 'NO OF PHONES' FROM dataset1.smartphones WHERE PRICE BETWEEN 10000 AND 20000;
+
+# find phones with the rating > 80 and price < 20000
+SELECT * FROM dataset1.smartphones WHERE (RATING > 80 AND PRICE < 20000);
+
+# find all samsung phones with ram > 8GB
+SELECT * FROM dataset1.smartphones WHERE RAM_CAPACITY >= 8
+
