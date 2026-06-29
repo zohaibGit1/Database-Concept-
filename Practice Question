@@ -18,3 +18,65 @@ select avg(internal_memory) as RAM
 select count(1)
 	  from dataset1.smartphones 
       where has_5g = 'true';
+
+select * from dataset1.insurance_data;
+# Question 1 ->Show records of 'male' patient from 'southwest' region.
+select * from dataset1.insurance_data
+		where gender = 'male' 
+        and region = 'southwest';
+        
+# Question 2 -> Show all records having bmi in range 30 to 45 both inclusive.
+select * from dataset1.insurance_data
+		where bmi between 30 and 45;
+
+#Question 3 -> Show minimum and maximum bloodpressure of diabetic patient who smokes. 
+# Make column names as MinBP and MaxBP respectively.
+select max(bloodpressure) AS MaxBP, min(bloodpressure) AS MinBP
+	   from dataset1.insurance_data
+       where diabetic = 'Yes' 
+       and smoker = 'Yes';
+
+# Question 4 -> Find no of unique patients who are not from southwest region
+select * from dataset1.insurance_data;
+
+select (count(distinct patientId)) from dataset1.insurance_data
+	   where region <> 'southwest';	
+# Question 5 -> Total claim amount from male smoker.
+select * from dataset1.insurance_data;
+select sum(claim) from dataset1.insurance_data 
+where smoker = 'Yes'
+and gender = 'male';
+
+# Question 6 -> No of patient having normal blood pressure. Normal range[90-120]
+select count(1) 
+	from dataset1.insurance_data
+    where bloodpressure between 90 AND 120;
+
+# Question 7 -> No of pateint below 17 years of age having normal blood pressure as per below formula -
+-- BP normal range = 80+(age in years × 2) to 100 + (age in years × 2)
+-- Note: Formula taken just for practice, don't take in real sense.
+
+select count(1) AS total_patients 
+from dataset1.insurance_data
+where age < 17
+	Between (80 + (age * 2))
+			AND (100 + (age * 2));
+            
+# Question 8 -> What is the average claim amount for non-smoking female patients who are diabetic?
+
+select avg(claim)
+	from dataset1.insurance_data
+    where gender = 'female' 
+	and smoker = 'no' and diabetic = 'yes'; 
+    
+
+# Question 9 -> Write a SQL query to update the claim amount 
+-- for the patient with PatientID = 1234 to 5000.
+select * from dataset1.insurance_data;    
+
+select * from dataset1.insurance_data where patientId = 5000;  
+
+UPDATE dataset1.insurance_data
+SET patientId = 5000
+where patientId = 1234;
+
