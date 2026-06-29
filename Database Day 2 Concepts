@@ -16,3 +16,58 @@ SELECT * FROM dataset1.smartphones WHERE (RATING > 80 AND PRICE < 20000);
 # find all samsung phones with ram > 8GB
 SELECT * FROM dataset1.smartphones WHERE RAM_CAPACITY >= 8
 
+# find the brand who sell phones with the price > 50000
+SELECT DISTINCT(BRAND_NAME) FROM dataset1.smartphones WHERE PRICE > 100000;
+
+# find the mobiles using in operator
+select count(distinct brand_name) from dataset1.smartphones where processor_brand 
+in ('snapdragon', 'exynos', 'dimensity', 'helio');
+
+# Update query 
+select * from dataset1.smartphones 
+where processor_brand = 'dimensity';
+
+select * from dataset1.smartphones 
+where processor_brand = 'mediatek';
+
+update dataset1.smartphones
+SET processor_brand = 'mediatek'
+where processor_brand = 'dimensity';
+
+update campusx.smartphones
+SET email = 'zohaib123@gmail.com', password = '123'
+where user_id = 1;
+
+# find all phones whose price > 200000
+select * from dataset1.smartphones
+where price > 200000;
+
+delete from dataset1.smartphones
+where price > 200000;
+
+# get all phones who battery capcity is > 7000
+select * from dataset1.smartphones where battery_capcity > 7000;
+
+# delete based on multiple filters
+delete from dataset1.smartphones 
+where primary_camera_rear > 150 AND brand_name = 'samsung';
+
+# find the maximum and minimum salary
+select * from dataset1.smartphones;
+select max(price), brand_name from dataset1.smartphones;
+SELECT brand_name, MAX(price) AS highest_price
+FROM dataset1.smartphones
+GROUP BY brand_name;
+
+select * from dataset1.smartphones where brand_name = 'apple';
+select avg(rating) from dataset1.smartphones where brand_name = 'apple';
+
+# Scalar Functions
+select * from dataset1.smartphones;
+# price - 100000 this will give some values negative but if we want to positive values then we use this 
+select abs((price - 100000)) from dataset1.smartphones;
+-- since we can use the round and ceil and floor
+
+
+
+
