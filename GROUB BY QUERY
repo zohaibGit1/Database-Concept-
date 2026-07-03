@@ -1,0 +1,245 @@
+# SQL GROUP BY Practice Questions
+
+This repository contains SQL queries demonstrating the use of the `GROUP BY` clause along with aggregate functions such as `COUNT()`, `AVG()`, `SUM()`, `MAX()`, `MIN()`, and `ORDER BY`.
+
+---
+
+# What is GROUP BY?
+
+The `GROUP BY` clause in SQL is used to **group rows that have the same values in one or more columns**. It is commonly used with aggregate functions to calculate summary information for each group.
+
+For example, you can use `GROUP BY` to:
+
+- Count employees in each department.
+- Calculate the average salary for each department.
+- Find the maximum or minimum value within each group.
+- Summarize data by categories such as brand, city, department, etc.
+
+---
+
+# Syntax
+
+```sql
+SELECT column_name,
+       aggregate_function(column_name)
+FROM table_name
+WHERE condition
+GROUP BY column_name
+ORDER BY column_name;
+```
+
+### Multiple Columns
+
+```sql
+SELECT column1,
+       column2,
+       aggregate_function(column3)
+FROM table_name
+GROUP BY column1, column2;
+```
+
+---
+
+# Rules of GROUP BY
+
+- Every non-aggregated column in the `SELECT` clause **must** be included in the `GROUP BY` clause.
+- Aggregate functions such as `COUNT()`, `SUM()`, `AVG()`, `MAX()`, and `MIN()` do **not** need to be included in the `GROUP BY` clause.
+- `WHERE` filters rows **before** grouping.
+- `HAVING` filters groups **after** grouping.
+- `ORDER BY` is used to sort the grouped results.
+
+---
+
+# Aggregate Functions Used
+
+| Function | Description |
+|----------|-------------|
+| `COUNT()` | Counts the number of rows |
+| `SUM()` | Calculates the total of a numeric column |
+| `AVG()` | Calculates the average value |
+| `MAX()` | Returns the highest value |
+| `MIN()` | Returns the lowest value |
+| `ROUND()` | Rounds numeric values |
+
+---
+
+# Dataset
+
+- **Database:** `dataset1`
+- **Table:** `smartphones`
+
+---
+
+# Question 1
+
+### Group smartphones by brand and get the count, average price, maximum rating, average screen size, and average battery capacity.
+
+```sql
+SELECT BRAND_NAME AS 'BRAND NAME',
+       COUNT(1) AS 'NO OF MOBILE',
+       ROUND(AVG(PRICE)) AS 'AVG PRICE',
+       MAX(RATING) AS 'MAX RATING',
+       ROUND(AVG(SCREEN_SIZE)) AS 'AVG SCREEN SIZE',
+       ROUND(AVG(BATTERY_CAPACITY)) AS 'AVG BATTERY CAPACITY'
+FROM dataset1.smartphones
+GROUP BY BRAND_NAME;
+```
+
+---
+
+# Question 2
+
+### Group smartphones based on NFC availability and calculate the average price and average rating.
+
+```sql
+SELECT HAS_NFC,
+       ROUND(AVG(PRICE)) AS 'AVG PRICE',
+       ROUND(AVG(RATING)) AS 'AVG RATING'
+FROM dataset1.smartphones
+GROUP BY HAS_NFC;
+```
+
+---
+
+# Question 3
+
+### Group smartphones based on extended memory availability and calculate the average price.
+
+```sql
+SELECT EXTENDED_MEMORY_AVAILABLE,
+       ROUND(AVG(PRICE)) AS 'AVG PRICE'
+FROM dataset1.smartphones
+GROUP BY EXTENDED_MEMORY_AVAILABLE;
+```
+
+---
+
+# Question 4
+
+### Group smartphones by brand and processor brand, then find the number of models and average rear primary camera resolution.
+
+```sql
+SELECT BRAND_NAME,
+       PROCESSOR_BRAND,
+       COUNT(MODEL) AS 'NO OF MODELS',
+       ROUND(AVG(PRIMARY_CAMERA_REAR)) AS 'AVG PRIMARY CAMERA'
+FROM dataset1.smartphones
+GROUP BY BRAND_NAME, PROCESSOR_BRAND;
+```
+
+---
+
+# Question 5
+
+### Find the top 5 most costly phone brands based on average price.
+
+```sql
+SELECT BRAND_NAME,
+       ROUND(AVG(PRICE)) AS 'AVG PRICE'
+FROM dataset1.smartphones
+GROUP BY BRAND_NAME
+ORDER BY AVG_PRICE DESC
+LIMIT 5;
+```
+
+---
+
+# Question 6
+
+### Find the brand that manufactures the smallest screen smartphones.
+
+```sql
+SELECT BRAND_NAME,
+       ROUND(MIN(SCREEN_SIZE),2) AS 'SMALLEST SCREEN'
+FROM dataset1.smartphones
+GROUP BY BRAND_NAME
+ORDER BY MIN(SCREEN_SIZE)
+LIMIT 1;
+```
+
+---
+
+# Question 7
+
+### Compare the average price of 5G smartphones and Non-5G smartphones.
+
+```sql
+SELECT HAS_5G,
+       ROUND(AVG(PRICE)) AS 'AVG PRICE'
+FROM dataset1.smartphones
+GROUP BY HAS_5G;
+```
+
+---
+
+# Question 8
+
+### Find the brand having the highest number of smartphones with both NFC and IR Blaster.
+
+```sql
+SELECT BRAND_NAME,
+       COUNT(1) AS 'NO OF MODELS'
+FROM dataset1.smartphones
+WHERE HAS_NFC = 'TRUE'
+  AND HAS_IR_BLASTER = 'TRUE'
+GROUP BY BRAND_NAME
+ORDER BY NO_OF_MODELS DESC
+LIMIT 1;
+```
+
+---
+
+# Question 9
+
+### Find the average price of NFC and Non-NFC Samsung 5G smartphones.
+
+```sql
+SELECT HAS_NFC,
+       ROUND(AVG(PRICE)) AS 'AVG PRICE'
+FROM dataset1.smartphones
+WHERE BRAND_NAME = 'samsung'
+  AND HAS_5G = 'TRUE'
+GROUP BY HAS_NFC;
+```
+
+---
+
+# SQL Concepts Covered
+
+- GROUP BY
+- Aggregate Functions
+  - COUNT()
+  - SUM()
+  - AVG()
+  - MAX()
+  - MIN()
+- ROUND()
+- WHERE Clause
+- HAVING Clause
+- ORDER BY
+- LIMIT
+- Multiple Column GROUP BY
+- Data Aggregation
+- Filtering Before Grouping
+
+---
+
+# Learning Outcomes
+
+After completing these exercises, you will be able to:
+
+- Understand how the `GROUP BY` clause works in SQL.
+- Group data using one or multiple columns.
+- Use aggregate functions to summarize grouped data.
+- Sort grouped results using `ORDER BY`.
+- Filter rows before grouping using `WHERE`.
+- Filter grouped data using `HAVING`.
+- Write SQL queries to solve real-world data analysis problems.
+
+---
+
+# Author
+
+**Zohaib Anwar**
+
+Aspiring Java Backend Developer | SQL | MySQL | Spring Boot | DevOps | Generative AI
