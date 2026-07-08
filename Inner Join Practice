@@ -1,0 +1,124 @@
+Select * From employees;
+SELECT * FROM BRANCH;
+SELECT * FROM TRANSACTIONS;
+SELECT * FROM ACCOUNTS;
+
+SELECT e.emp_id, e.first_name, e.salary
+FROM employees e
+INNER JOIN branch b
+on e.branch_code = b.branch_code
+where b.branch_name = 'mumbai';
+
+-- find total no of successful transactions that belong to inactive customer
+SELECT T.TRNS_ID, T.STATUS, C.IS_ACTIVE FROM 
+CUSTOMERS C 
+INNER JOIN ACCOUNTS A ON A.CUST_ID = C.CUSTOMER_ID 
+INNER JOIN TRANSACTIONS T ON T.ACC_NUMBER
+WHERE T.STATUS = 'SUCCESS' AND C.IS_ACTIVE = 'FALSE';
+
+
+-- categories the employee salary 
+SELECT * FROM EMPLOYEES;
+SELECT FIRST_NAME, 
+		SALARY, 
+        EMP_ID,
+        CASE 
+			WHEN SALARY < 50000 THEN 'LOW SALARY'
+            WHEN SALARY BETWEEN 50000 AND 70000 THEN 'Medium'
+            ELSE 'HIGH'
+		END AS SALARY_CATEGORY
+FROM EMPLOYEES;
+
+SELECT * FROM PRODUCTS;
+SELECT P.NAME, SUM(S.QUANTITY) AS TOTAL_SOLD
+FROM PRODUCTS P
+JOIN SALES1 S ON P.PRODUCTID = S.PRODUCTID
+GROUP BY P.NAME
+ORDER BY TOTAL_SOLD DESC
+LIMIT 5 ;
+
+-- Find sales man who sold most no of products.
+SELECT SalesPersonId, SUM(QUANTITY) AS TOTAL_QUANTITY_SOLD
+FROM SALES1 S 
+INNER JOIN PRODUCTS P ON S.PRODUCTID = P.PRODUCTID
+GROUP BY SalesPersonId
+ORDER BY TOTAL_QUANTITY_SOLD DESC
+LIMIT 1;
+
+-- Sales man name who has most no of unique customer.
+SELECT SalesPersonId,  COUNT(DISTINCT S.CUSTOMERID) AS UNIQUE_COUSTOMERS
+FROM SALES1 S
+JOIN CUSTOMERS C ON S.CUSTOMERID = C.CUSTOMERID 
+group by SalesPersonId
+ORDER BY UNIQUE_COUSTOMERS DESC
+LIMIT 1 ;
+
+-- Sales man who has generated most revenue. Show top 5.
+SELECT S.SALESPERSONID, ROUND(SUM(P.PRICE * S.QUANTITY)) AS TOTAL_REVENUE
+FROM SALES1 S 
+JOIN PRODUCTS P ON S.PRODUCTID = P.PRODUCTID
+GROUP BY SALESPERSONID
+ORDER BY TOTAL_REVENUE DESC
+LIMIT 5;
+--  List all customers who have made more than 10 purchases.
+
+
+
+SELECT * FROM dataset3.sales1;
+SELECT S.SALESPERSONID, ROUND(SUM(P.PRICE * S.QUANTITY)) AS TOTAL_REVENUE
+FROM SALES1 S 
+JOIN PRODUCTS P ON S.PRODUCTID = P.PRODUCTID
+GROUP BY SALESPERSONID
+ORDER BY TOTAL_REVENUE DESC
+LIMIT 5;
+
+--  List all customers who have made more than 10 purchases.
+SELECT CustomerID,
+       COUNT(*) AS Total_Purchases
+FROM SALES1
+GROUP BY CustomerID
+HAVING COUNT(*) > 10;
+
+-- List all pairs of customers who 
+-- have made purchases with the same salesperson.
+
+SELECT DISTINCT
+       S1.CustomerID AS Customer1,
+       S2.CustomerID AS Customer2,
+       S1.SalesPersonID
+FROM SALES1 S1
+JOIN SALES1 S2
+ON S1.SalesPersonID = S2.SalesPersonID
+AND S1.CustomerID < S2.CustomerID;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
